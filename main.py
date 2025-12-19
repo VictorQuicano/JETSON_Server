@@ -27,7 +27,7 @@ class SensorData(Base):
     sample_id = Column(Integer, index=True)
     timestamp = Column(Float, index=True)
     ir_sensor = Column(JSON)
-    gyro_sensor = Column(JSON)
+    # gyro_sensor = Column(JSON)
     robot_info = Column(JSON)
     created_at = Column(DateTime, default=datetime.utcnow)
 
@@ -64,7 +64,7 @@ class SensorPayload(BaseModel):
     sample_id: int
     timestamp: float
     ir_sensor: IRSensorData
-    gyro_sensor: GyroData
+    # gyro_sensor: GyroData
     robot_info: RobotInfo
 
 class ActionPayload(BaseModel):
@@ -168,7 +168,7 @@ async def store_sensor_data(payload: SensorPayload, db: Session = Depends(get_db
             sample_id=payload.sample_id,
             timestamp=payload.timestamp,
             ir_sensor=payload.ir_sensor.dict(),
-            gyro_sensor=payload.gyro_sensor.dict(),
+            # gyro_sensor=payload.gyro_sensor.dict(),
             robot_info=payload.robot_info.dict()
         )
         
@@ -181,7 +181,7 @@ async def store_sensor_data(payload: SensorPayload, db: Session = Depends(get_db
             "sample_id": payload.sample_id,
             "timestamp": payload.timestamp,
             "ir_sensor": payload.ir_sensor.dict(),
-            "gyro_sensor": payload.gyro_sensor.dict(),
+            # "gyro_sensor": payload.gyro_sensor.dict(),
             "robot_info": payload.robot_info.dict(),
             "db_id": sensor_data.id,
             "created_at": datetime.utcnow().isoformat()
@@ -210,7 +210,7 @@ async def get_latest_sensor_data(db: Session = Depends(get_db)):
                 "sample_id": latest.sample_id,
                 "timestamp": latest.timestamp,
                 "ir_sensor": latest.ir_sensor,
-                "gyro_sensor": latest.gyro_sensor,
+                # "gyro_sensor": latest.gyro_sensor,
                 "robot_info": latest.robot_info,
                 "db_id": latest.id,
                 "created_at": latest.created_at.isoformat()
@@ -503,7 +503,7 @@ async def startup_event():
                 "sample_id": latest_sensor.sample_id,
                 "timestamp": latest_sensor.timestamp,
                 "ir_sensor": latest_sensor.ir_sensor,
-                "gyro_sensor": latest_sensor.gyro_sensor,
+                # "gyro_sensor": latest_sensor.gyro_sensor,
                 "robot_info": latest_sensor.robot_info,
                 "db_id": latest_sensor.id,
                 "created_at": latest_sensor.created_at.isoformat()
